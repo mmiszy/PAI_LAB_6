@@ -31,6 +31,8 @@ namespace Client.Server {
         
         private System.Threading.SendOrPostCallback GetDataOperationCompleted;
         
+        private System.Threading.SendOrPostCallback SaveDataOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -73,6 +75,9 @@ namespace Client.Server {
         public event GetDataCompletedEventHandler GetDataCompleted;
         
         /// <remarks/>
+        public event SaveDataCompletedEventHandler SaveDataCompleted;
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetData", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public Model[] GetData(int from, int slice) {
             object[] results = this.Invoke("GetData", new object[] {
@@ -100,6 +105,34 @@ namespace Client.Server {
             if ((this.GetDataCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetDataCompleted(this, new GetDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveData", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void SaveData(Model transferObject) {
+            this.Invoke("SaveData", new object[] {
+                        transferObject});
+        }
+        
+        /// <remarks/>
+        public void SaveDataAsync(Model transferObject) {
+            this.SaveDataAsync(transferObject, null);
+        }
+        
+        /// <remarks/>
+        public void SaveDataAsync(Model transferObject, object userState) {
+            if ((this.SaveDataOperationCompleted == null)) {
+                this.SaveDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveDataOperationCompleted);
+            }
+            this.InvokeAsync("SaveData", new object[] {
+                        transferObject}, this.SaveDataOperationCompleted, userState);
+        }
+        
+        private void OnSaveDataOperationCompleted(object arg) {
+            if ((this.SaveDataCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveDataCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -216,6 +249,10 @@ namespace Client.Server {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.33440")]
+    public delegate void SaveDataCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

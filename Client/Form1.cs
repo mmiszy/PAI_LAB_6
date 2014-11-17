@@ -14,6 +14,7 @@ namespace Client
     {
         private const int DATA_SLICE = 10;
         private int RecordsFrom = 0;
+        private Server.Server server;
 
         public Form1()
         {
@@ -23,8 +24,8 @@ namespace Client
 
         private void ReloadData()
         {
-            Server.Server server = new Server.Server();
-            List<Server.Model> persons = server.GetData(this.RecordsFrom, Form1.DATA_SLICE).ToList();
+            this.server = new Server.Server();
+            List<Server.Model> persons = this.server.GetData(this.RecordsFrom, Form1.DATA_SLICE).ToList();
 
             BindingList<Server.Model> personsList = new BindingList<Server.Model>(persons);
             this.PersonsList.DataSource = personsList;
@@ -50,10 +51,22 @@ namespace Client
             this.ReloadData();
             if(((BindingList<Server.Model>)this.PersonsList.DataSource).Count == 0)
             {
-                this.RecordsFrom -= Form1.DATA_SLICE;
                 //rollback, because we probably went too far
+                this.RecordsFrom -= Form1.DATA_SLICE;
                 this.PersonsList.DataSource = personsList;
             }
+        }
+
+        private void PersonsList_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex < 0 || e.RowIndex < 0)
+            {
+                return;
+            }
+
+            Server.Model transferObject = ((BindingList<Server.Model>)this.PersonsList.DataSource)[e.RowIndex];
+            this.server.SaveData(transferObject);
+            this.ReloadData();
         }
     }
 }

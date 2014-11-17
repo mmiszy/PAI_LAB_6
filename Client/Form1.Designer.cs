@@ -57,6 +57,7 @@
             this.PersonsList.Name = "PersonsList";
             this.PersonsList.Size = new System.Drawing.Size(547, 237);
             this.PersonsList.TabIndex = 0;
+            this.PersonsList.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.PersonsList_CellValueChanged);
             // 
             // idDataGridViewTextBoxColumn
             // 

@@ -31,6 +31,16 @@
           <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="SaveData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="transferObject" type="tns:Model" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveDataResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="ArrayOfModel" nillable="true" type="tns:ArrayOfModel" />
     </s:schema>
   </wsdl:types>
@@ -39,6 +49,12 @@
   </wsdl:message>
   <wsdl:message name="GetDataSoapOut">
     <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveDataSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveData" />
+  </wsdl:message>
+  <wsdl:message name="SaveDataSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveDataResponse" />
   </wsdl:message>
   <wsdl:message name="GetDataHttpGetIn">
     <wsdl:part name="from" type="s:string" />
@@ -58,6 +74,10 @@
     <wsdl:operation name="GetData">
       <wsdl:input message="tns:GetDataSoapIn" />
       <wsdl:output message="tns:GetDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveData">
+      <wsdl:input message="tns:SaveDataSoapIn" />
+      <wsdl:output message="tns:SaveDataSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="ServerHttpGet">
@@ -83,11 +103,29 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SaveData">
+      <soap:operation soapAction="http://tempuri.org/SaveData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ServerSoap12" type="tns:ServerSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetData">
       <soap12:operation soapAction="http://tempuri.org/GetData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveData">
+      <soap12:operation soapAction="http://tempuri.org/SaveData" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
