@@ -8,7 +8,7 @@ namespace Server
 {
     interface IDataSource
     {
-        List<Model> getData();
-        void saveData(List<Model> data);
+        IList<Model> GetData();
+        void SaveData(IList<Model> data);
     }
 }
