@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="from" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="slice" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDataResult" type="tns:ArrayOfModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Model" nillable="true" type="tns:Model" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Model">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Age" type="s:unsignedInt" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfModel" nillable="true" type="tns:ArrayOfModel" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetData" />
+  </wsdl:message>
+  <wsdl:message name="GetDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDataHttpGetIn">
+    <wsdl:part name="from" type="s:string" />
+    <wsdl:part name="slice" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDataHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfModel" />
+  </wsdl:message>
+  <wsdl:message name="GetDataHttpPostIn">
+    <wsdl:part name="from" type="s:string" />
+    <wsdl:part name="slice" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfModel" />
+  </wsdl:message>
+  <wsdl:portType name="ServerSoap">
+    <wsdl:operation name="GetData">
+      <wsdl:input message="tns:GetDataSoapIn" />
+      <wsdl:output message="tns:GetDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServerHttpGet">
+    <wsdl:operation name="GetData">
+      <wsdl:input message="tns:GetDataHttpGetIn" />
+      <wsdl:output message="tns:GetDataHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServerHttpPost">
+    <wsdl:operation name="GetData">
+      <wsdl:input message="tns:GetDataHttpPostIn" />
+      <wsdl:output message="tns:GetDataHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServerSoap" type="tns:ServerSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://tempuri.org/GetData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServerSoap12" type="tns:ServerSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetData">
+      <soap12:operation soapAction="http://tempuri.org/GetData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServerHttpGet" type="tns:ServerHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetData">
+      <http:operation location="/GetData" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServerHttpPost" type="tns:ServerHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetData">
+      <http:operation location="/GetData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Server">
+    <wsdl:port name="ServerSoap" binding="tns:ServerSoap">
+      <soap:address location="http://localhost:58353/Server.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServerSoap12" binding="tns:ServerSoap12">
+      <soap12:address location="http://localhost:58353/Server.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServerHttpGet" binding="tns:ServerHttpGet">
+      <http:address location="http://localhost:58353/Server.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServerHttpPost" binding="tns:ServerHttpPost">
+      <http:address location="http://localhost:58353/Server.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
