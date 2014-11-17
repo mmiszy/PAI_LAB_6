@@ -16,11 +16,11 @@ namespace Server
     // [System.Web.Script.Services.ScriptService]
     public class Server : System.Web.Services.WebService
     {
-
         [WebMethod]
-        public string HelloWorld()
+        public List<Model> GetData(int from = 0, int slice = 1)
         {
-            return "Hello World";
+            ValueListHandler VLHandler = new ValueListHandler();
+            return VLHandler.GetData(from, slice).ToList();
         }
     }
 }

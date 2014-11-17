@@ -9,11 +9,12 @@ namespace Server
 {
     public class DAO
     {
-        private JSONDataSource.JSONDataSource DataSource = new JSONDataSource.JSONDataSource();
+        private JSONDataSource.JSONDataSource DataSource;
         private IList<Model> Data;
 
         public DAO()
         {
+            this.DataSource = new JSONDataSource.JSONDataSource();
             this.Data = this.DataSource.GetData();
         }
 

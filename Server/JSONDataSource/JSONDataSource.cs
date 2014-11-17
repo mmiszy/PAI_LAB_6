@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Script.Serialization;
 
 namespace Server.JSONDataSource
@@ -16,7 +17,7 @@ namespace Server.JSONDataSource
             IList<Model> persons;
             try
             {
-                string data = File.ReadAllText("data.json");
+                string data = File.ReadAllText(HostingEnvironment.ApplicationPhysicalPath + "JSONDataSource\\data.json");
                 persons = this.Serializer.Deserialize<IList<Model>>(data);
             }
             catch (Exception e)

@@ -7,11 +7,12 @@ namespace Server
 {
     public class ValueListHandler
     {
-        private DAO Dao = new DAO();
+        private DAO Dao;
         private IList<Model> Data;
 
         public ValueListHandler()
         {
+            this.Dao = new DAO();
             this.Data = this.Dao.GetData();
         }
 
