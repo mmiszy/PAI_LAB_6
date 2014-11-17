@@ -31,7 +31,7 @@ namespace Server.JSONDataSource
         public void SaveData(IList<Model> data)
         {
             string serialized = this.Serializer.Serialize(data);
-            File.WriteAllText("data.json", serialized);
+            File.WriteAllText(HostingEnvironment.ApplicationPhysicalPath + "JSONDataSource\\data.json", serialized);
         }
     }
 }

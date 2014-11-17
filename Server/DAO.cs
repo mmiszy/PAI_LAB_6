@@ -32,6 +32,7 @@ namespace Server
         public void SavePerson(Model person)
         {
             this.Data[person.Id] = person;
+            this.DataSource.SaveData(this.Data);   
         }
     }
 }

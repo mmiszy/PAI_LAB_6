@@ -22,5 +22,12 @@ namespace Server
             ValueListHandler VLHandler = new ValueListHandler();
             return VLHandler.GetData(from, slice).ToList();
         }
+
+        [WebMethod]
+        public void SaveData(Model transferObject)
+        {
+            DAO Dao = new DAO();
+            Dao.SavePerson(transferObject);
+        }
     }
 }
