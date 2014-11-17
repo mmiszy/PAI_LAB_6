@@ -12,18 +12,23 @@ namespace Server
         private JSONDataSource.JSONDataSource DataSource = new JSONDataSource.JSONDataSource();
         private IList<Model> Data;
 
-        public DAO ()
+        public DAO()
         {
             this.Data = this.DataSource.GetData();
         }
 
-        public Model GetPersonById (int id)
+        public IList<Model> GetData()
+        {
+            return this.Data;
+        }
+
+        public Model GetPersonById(int id)
         {
             return this.Data.Where((person) =>
                 person.Id.Equals(id)).First();
         }
 
-        public void SavePerson (Model person)
+        public void SavePerson(Model person)
         {
             this.Data[person.Id] = person;
         }
