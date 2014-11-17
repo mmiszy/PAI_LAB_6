@@ -7,10 +7,10 @@ namespace Server
 {
     public class Model
     {
-        private uint Id { get; set; }
-        private String Name {get; set;}
-        private uint Age { get; set; }
-        private String City { get; set; }
-        private String Address { get; set; }
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public uint Age { get; set; }
+        public String City { get; set; }
+        public String Address { get; set; }
     }
 }
