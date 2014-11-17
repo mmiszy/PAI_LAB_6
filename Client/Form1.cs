@@ -19,6 +19,8 @@ namespace Client
         public Form1()
         {
             InitializeComponent();
+            this.PersonsList.Columns[0].ReadOnly = true;
+            this.PersonsList.Columns[0].DefaultCellStyle.BackColor = System.Drawing.ColorTranslator.FromHtml("#888");
             this.ReloadData();            
         }
 
