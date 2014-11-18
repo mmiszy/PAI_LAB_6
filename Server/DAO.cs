@@ -9,12 +9,22 @@ namespace Server
 {
     public class DAO
     {
-        private JSONDataSource.JSONDataSource DataSource;
+        private IDataSource DataSource;
         private IList<Model> Data;
 
-        public DAO()
+        public enum DAOType
         {
-            this.DataSource = new JSONDataSource.JSONDataSource();
+            JSON
+        }
+
+        public DAO(DAOType dataSource)
+        {
+            switch(dataSource)
+            {
+                case DAOType.JSON:
+                    this.DataSource = new JSONDataSource.JSONDataSource();
+                    break;
+            }
             this.Data = this.DataSource.GetData();
         }
 

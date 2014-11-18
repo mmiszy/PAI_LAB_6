@@ -12,7 +12,7 @@ namespace Server
 
         public ValueListHandler()
         {
-            this.Dao = new DAO();
+            this.Dao = new DAO(DAO.DAOType.JSON);
             this.Data = this.Dao.GetData();
         }
 

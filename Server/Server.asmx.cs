@@ -26,7 +26,7 @@ namespace Server
         [WebMethod]
         public void SaveData(Model transferObject)
         {
-            DAO Dao = new DAO();
+            DAO Dao = new DAO(DAO.DAOType.JSON);
             Dao.SavePerson(transferObject);
         }
     }
